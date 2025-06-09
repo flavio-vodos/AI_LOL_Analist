@@ -1,3 +1,5 @@
+#utilizado a biblioteca gdown, pois o wget não consegue acessar arquivos em google drive.
+
 import gdown
 
 url = "https://drive.google.com/uc?id=1v6LRphp2kYciU4SXp0PCjEMuev1bDejc"
