@@ -1,0 +1,83 @@
+A;Total assists
+AGT;Average game time/duration, in minutes
+APG;Assists per game
+B%;Percentage of games in which the champion was banned (not tied to a specific role)
+BLND%;Blind-pick rate: percentage of games in which this player/champion was picked before their lane opponent (not always available)
+BN%;Baron control rate
+CCPM;Crowd control dealt to champions per minute
+Champion;Champion name
+CKPM;Average combined kills per minute (team kills + opponent kills)
+CS%P15;Average share of team's total CS post-15-minutes
+CSD10;Average creep score difference at 10 minutes
+CSD15;Average creep score difference at 15 minutes
+CSD20;Average creep score difference at 20 minutes
+CSPM;Average monsters + minions killed per minute
+CTR%;Counter-pick rate: percentage of games in which this player/champion was picked after their lane opponent (not always available)
+CWPM;Control wards purchased per minute
+D;Total deaths
+D%P15;Average share of team's damage to champions post-15-minutes
+DMG%;Damage Share: average share of team’s total damage to champions
+DMG%P15;Average share of team's damage to champions post-15-minutes
+DPG;Deaths per game
+DPM;Average damage to champions per minute
+DRG%;Dragon control rate: percent of all Dragons killed that were taken by the team, reflecting only elemental drakes if ELD% is present
+DTH%;Average share of team’s deaths
+EGPM;Average earned gold per minute (excludes starting gold and inherent gold generation)
+EGR;Early-Game Rating
+ELD%;Elder dragon control rate
+Event;Event name
+F3T%;First-to-three-towers rate (percentage of games in which team was the first to 3 tower kills
+FB%;First Blood rate -- for players/champions, percent of games earning a First Blood participation (kill or assist)
+FBN%;First Baron rate
+FBV%;First Blood Victim rate -- percent of games player/champion was killed for First Blood
+FD%;First dragon rate
+FT%;First tower rate
+GD10;Average gold difference at 10 minutes
+GD15;Average gold difference at 15 minutes
+GD20;Average gold difference at 20 minutes
+GOLD%;Gold Share: average share of team’s total gold earned (excludes starting gold and inherent gold generation)
+GP;Games Played
+GPM;Average gold per minute
+GPR;Gold percent rating (average amount of game’s total gold held, relative to 50%)
+GRB%;Void Grub control rate
+GSPD;Average gold spent percentage difference
+GXD10;Average gold+experience difference at 10 minutes
+GXD15;Average gold+experience difference at 15 minutes
+GXD20;Average gold+experience difference at 20 minutes
+HLD%;Rift Herald control rate
+IWC%;Average percentage of opponent’s invisible wards cleared
+JNG%;Jungle Control: average share of game’s total jungle CS
+K;Total kills
+KD;Kill-to-Death Ratio
+KDA;Total Kill/Death/Assist ratio
+KP;Kill participation: percentage of team's kills in which player earned a Kill or Assist
+KPG;Kills per game
+KS%;Kill share: player's percentage of their team's total kills
+L;Losses
+LNE%;Lane Control: average share of game’s total lane CS
+Losses;Total Losses
+LP;Ladder Points
+MLR;Mid/Late Rating
+OE Rating;Oracle’s Elixir Performance Rating
+OE Rtg;Oracle’s Elixir Performance Rating
+P%;Percentage of games champion was picked in this role.
+P+B%;Percentage of games in which the champion was either banned or picked in any role
+Player;Player's in-game name
+Pos;Position
+PPG;Turret plates destroyed per game
+Rank;Official Leaderboard Rank
+STL;Neutral objectives stolen
+STLPG;Neutral objectives stolen per game
+StPG;Neutral objectives stolen per game
+Team;Team name
+VSPM;Vision score per minute
+VWC%;Average percentage of opponent’s visible wards cleared
+W;Wins
+W%;Win percentage
+WC%;Average percentage of opponent wards cleared
+WCPM;Average wards cleared per minute
+Wins;Total Wins
+WPM;Average wards placed per minute
+XPD10;Average experience difference at 10 minutes
+XPD15;Average experience difference at 15 minutes
+XPD20;Average experience difference at 20 minutes
