@@ -1,0 +1,322 @@
+﻿Loading svelte-check in workspace: c:\Projetos\AI_LOL_Predictor\frontend
+Getting Svelte diagnostics...
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\lib\components\MatchCard.svelte[39m:20:18
+[33mWarn[39m: This reference only captures the initial value of `match`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+[36m
+  const b_name = [35mmatch[36m.team_blue?.name || match.team_blue?.code || "Team 1";
+  const r_name = match.team_red?.name || match.team_red?.code || "Team 2";[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\lib\components\MatchCard.svelte[39m:20:43
+[33mWarn[39m: This reference only captures the initial value of `match`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+[36m
+  const b_name = match.team_blue?.name || [35mmatch[36m.team_blue?.code || "Team 1";
+  const r_name = match.team_red?.name || match.team_red?.code || "Team 2";[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\lib\components\MatchCard.svelte[39m:21:18
+[33mWarn[39m: This reference only captures the initial value of `match`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+[36m  const b_name = match.team_blue?.name || match.team_blue?.code || "Team 1";
+  const r_name = [35mmatch[36m.team_red?.name || match.team_red?.code || "Team 2";
+  const b_img = match.team_blue?.image;[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\lib\components\MatchCard.svelte[39m:21:42
+[33mWarn[39m: This reference only captures the initial value of `match`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+[36m  const b_name = match.team_blue?.name || match.team_blue?.code || "Team 1";
+  const r_name = match.team_red?.name || [35mmatch[36m.team_red?.code || "Team 2";
+  const b_img = match.team_blue?.image;[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\lib\components\MatchCard.svelte[39m:22:17
+[33mWarn[39m: This reference only captures the initial value of `match`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+[36m  const r_name = match.team_red?.name || match.team_red?.code || "Team 2";
+  const b_img = [35mmatch[36m.team_blue?.image;
+  const r_img = match.team_red?.image;[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\lib\components\MatchCard.svelte[39m:23:17
+[33mWarn[39m: This reference only captures the initial value of `match`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+[36m  const b_img = match.team_blue?.image;
+  const r_img = [35mmatch[36m.team_red?.image;
+  const league = match.league || "Unknown League";[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\lib\components\MatchCard.svelte[39m:24:18
+[33mWarn[39m: This reference only captures the initial value of `match`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+[36m  const r_img = match.team_red?.image;
+  const league = [35mmatch[36m.league || "Unknown League";
+  const matchId = match.match_id || match.game_id;[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\lib\components\MatchCard.svelte[39m:25:19
+[33mWarn[39m: This reference only captures the initial value of `match`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+[36m  const league = match.league || "Unknown League";
+  const matchId = [35mmatch[36m.match_id || match.game_id;
+</script>[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\lib\components\MatchCard.svelte[39m:25:37
+[33mWarn[39m: This reference only captures the initial value of `match`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+[36m  const league = match.league || "Unknown League";
+  const matchId = match.match_id || [35mmatch[36m.game_id;
+</script>[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:171:11
+[33mWarn[39m: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+[36m        <div class="flex flex-col gap-2 relative">
+          [35m<label class="flex items-center gap-2 text-sm font-semibold text-[#90CDF4]">
+            <span class="h-3 w-3 rounded-sm bg-blue-500"></span>
+            Time 1 (Blue Side)
+          </label>[36m
+          <div class="flex items-center gap-3">[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:211:11
+[33mWarn[39m: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+[36m        <div class="flex flex-col gap-2 relative">
+          [35m<label class="flex items-center gap-2 text-sm font-semibold text-[#F56565]">
+            <span class="h-3 w-3 rounded-sm bg-red-500"></span>
+            Time 2 (Red Side)
+          </label>[36m
+          <div class="flex items-center gap-3">[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:252:7
+[33mWarn[39m: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+[36m    <div class="mb-6">
+      [35m<label class="block text-sm font-semibold text-slate-300 mb-2">­ƒôà Vers├Áes Filtradas (Por Padr├úo: ├Ültimos 4)</label>[36m
+      <div class="flex flex-wrap gap-2">[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:278:16
+[33mWarn[39m: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+[36m             <div class="flex flex-col items-center bg-[#0a101a] p-3 rounded-xl border border-[#1e40af] border-opacity-30">
+               [35m<label class="block text-xs font-bold text-blue-300 uppercase tracking-widest mb-3">top</label>[36m
+               <div class="w-16 h-16 bg-[#0f172a] border border-[#1e293b] rounded-lg overflow-hidden flex items-center justify-center mb-3 shadow-inner">[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:289:16
+[33mWarn[39m: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+[36m             <div class="flex flex-col items-center bg-[#0a101a] p-3 rounded-xl border border-[#1e40af] border-opacity-30">
+               [35m<label class="block text-xs font-bold text-blue-300 uppercase tracking-widest mb-3">jg</label>[36m
+               <div class="w-16 h-16 bg-[#0f172a] border border-[#1e293b] rounded-lg overflow-hidden flex items-center justify-center mb-3 shadow-inner">[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:300:16
+[33mWarn[39m: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+[36m             <div class="flex flex-col items-center bg-[#0a101a] p-3 rounded-xl border border-[#1e40af] border-opacity-30">
+               [35m<label class="block text-xs font-bold text-blue-300 uppercase tracking-widest mb-3">mid</label>[36m
+               <div class="w-16 h-16 bg-[#0f172a] border border-[#1e293b] rounded-lg overflow-hidden flex items-center justify-center mb-3 shadow-inner">[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:311:16
+[33mWarn[39m: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+[36m             <div class="flex flex-col items-center bg-[#0a101a] p-3 rounded-xl border border-[#1e40af] border-opacity-30">
+               [35m<label class="block text-xs font-bold text-blue-300 uppercase tracking-widest mb-3">adc</label>[36m
+               <div class="w-16 h-16 bg-[#0f172a] border border-[#1e293b] rounded-lg overflow-hidden flex items-center justify-center mb-3 shadow-inner">[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:322:16
+[33mWarn[39m: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+[36m             <div class="flex flex-col items-center bg-[#0a101a] p-3 rounded-xl border border-[#1e40af] border-opacity-30">
+               [35m<label class="block text-xs font-bold text-blue-300 uppercase tracking-widest mb-3">sup</label>[36m
+               <div class="w-16 h-16 bg-[#0f172a] border border-[#1e293b] rounded-lg overflow-hidden flex items-center justify-center mb-3 shadow-inner">[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:340:16
+[33mWarn[39m: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+[36m             <div class="flex flex-col items-center bg-[#0a101a] p-3 rounded-xl border border-[#991b1b] border-opacity-30">
+               [35m<label class="block text-xs font-bold text-red-300 uppercase tracking-widest mb-3">top</label>[36m
+               <div class="w-16 h-16 bg-[#0f172a] border border-[#1e293b] rounded-lg overflow-hidden flex items-center justify-center mb-3 shadow-inner">[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:351:16
+[33mWarn[39m: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+[36m             <div class="flex flex-col items-center bg-[#0a101a] p-3 rounded-xl border border-[#991b1b] border-opacity-30">
+               [35m<label class="block text-xs font-bold text-red-300 uppercase tracking-widest mb-3">jg</label>[36m
+               <div class="w-16 h-16 bg-[#0f172a] border border-[#1e293b] rounded-lg overflow-hidden flex items-center justify-center mb-3 shadow-inner">[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:362:16
+[33mWarn[39m: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+[36m             <div class="flex flex-col items-center bg-[#0a101a] p-3 rounded-xl border border-[#991b1b] border-opacity-30">
+               [35m<label class="block text-xs font-bold text-red-300 uppercase tracking-widest mb-3">mid</label>[36m
+               <div class="w-16 h-16 bg-[#0f172a] border border-[#1e293b] rounded-lg overflow-hidden flex items-center justify-center mb-3 shadow-inner">[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:373:16
+[33mWarn[39m: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+[36m             <div class="flex flex-col items-center bg-[#0a101a] p-3 rounded-xl border border-[#991b1b] border-opacity-30">
+               [35m<label class="block text-xs font-bold text-red-300 uppercase tracking-widest mb-3">adc</label>[36m
+               <div class="w-16 h-16 bg-[#0f172a] border border-[#1e293b] rounded-lg overflow-hidden flex items-center justify-center mb-3 shadow-inner">[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:384:16
+[33mWarn[39m: A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control (svelte)
+[36m             <div class="flex flex-col items-center bg-[#0a101a] p-3 rounded-xl border border-[#991b1b] border-opacity-30">
+               [35m<label class="block text-xs font-bold text-red-300 uppercase tracking-widest mb-3">sup</label>[36m
+               <div class="w-16 h-16 bg-[#0f172a] border border-[#1e293b] rounded-lg overflow-hidden flex items-center justify-center mb-3 shadow-inner">[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:44:5
+[31mError[39m: Cannot find name 'time1'. (ts)
+[36m  function selectTeam1(t: string) {
+    [35mtime1[36m = t;
+    q1 = t;[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:50:5
+[31mError[39m: Cannot find name 'time2'. (ts)
+[36m  function selectTeam2(t: string) {
+    [35mtime2[36m = t;
+    q2 = t;[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:71:11
+[31mError[39m: Cannot find name 'selectedPatches'. (ts)
+[36m          // Filtrar "Todos" da sele├º├úo padr├úo (Last 4 patches reais)
+          [35mselectedPatches[36m = patches.filter(p => p !== "Todos").slice(0, 4);
+        }[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:79:9
+[31mError[39m: Cannot find name 'selectedPatches'. (ts)
+[36m  function togglePatch(p: string) {
+    if ([35mselectedPatches[36m.includes(p)) {
+      selectedPatches = selectedPatches.filter(patch => patch !== p);[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:80:7
+[31mError[39m: Cannot find name 'selectedPatches'. (ts)
+[36m    if (selectedPatches.includes(p)) {
+      [35mselectedPatches[36m = selectedPatches.filter(patch => patch !== p);
+    } else {[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:80:25
+[31mError[39m: Cannot find name 'selectedPatches'. (ts)
+[36m    if (selectedPatches.includes(p)) {
+      selectedPatches = [35mselectedPatches[36m.filter(patch => patch !== p);
+    } else {[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:80:48
+[31mError[39m: Parameter 'patch' implicitly has an 'any' type. (ts)
+[36m    if (selectedPatches.includes(p)) {
+      selectedPatches = selectedPatches.filter([35mpatch[36m => patch !== p);
+    } else {[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:82:7
+[31mError[39m: Cannot find name 'selectedPatches'. (ts)
+[36m    } else {
+      [35mselectedPatches[36m = [...selectedPatches, p];
+    }[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:82:29
+[31mError[39m: Cannot find name 'selectedPatches'. (ts)
+[36m    } else {
+      selectedPatches = [...[35mselectedPatches[36m, p];
+    }[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:88:9
+[31mError[39m: Cannot find name 'time1'. (ts)
+[36m  $effect(() => {
+    if ([35mtime1[36m && time1 !== "Rode o Pipeline Primeiro" && time1 !== "Erro ao carregar times") {
+      fetch(`http://localhost:8000/api/analytics/team_logo/${encodeURIComponent(time1)}`)[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:88:18
+[31mError[39m: Cannot find name 'time1'. (ts)
+[36m  $effect(() => {
+    if (time1 && [35mtime1[36m !== "Rode o Pipeline Primeiro" && time1 !== "Erro ao carregar times") {
+      fetch(`http://localhost:8000/api/analytics/team_logo/${encodeURIComponent(time1)}`)[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:88:58
+[31mError[39m: Cannot find name 'time1'. (ts)
+[36m  $effect(() => {
+    if (time1 && time1 !== "Rode o Pipeline Primeiro" && [35mtime1[36m !== "Erro ao carregar times") {
+      fetch(`http://localhost:8000/api/analytics/team_logo/${encodeURIComponent(time1)}`)[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:89:81
+[31mError[39m: Cannot find name 'time1'. (ts)
+[36m    if (time1 && time1 !== "Rode o Pipeline Primeiro" && time1 !== "Erro ao carregar times") {
+      fetch(`http://localhost:8000/api/analytics/team_logo/${encodeURIComponent([35mtime1[36m)}`)
+        .then(r => r.json())[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:98:9
+[31mError[39m: Cannot find name 'time2'. (ts)
+[36m  $effect(() => {
+    if ([35mtime2[36m && time2 !== "Rode o Pipeline Primeiro" && time2 !== "Erro ao carregar times") {
+      fetch(`http://localhost:8000/api/analytics/team_logo/${encodeURIComponent(time2)}`)[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:98:18
+[31mError[39m: Cannot find name 'time2'. (ts)
+[36m  $effect(() => {
+    if (time2 && [35mtime2[36m !== "Rode o Pipeline Primeiro" && time2 !== "Erro ao carregar times") {
+      fetch(`http://localhost:8000/api/analytics/team_logo/${encodeURIComponent(time2)}`)[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:98:58
+[31mError[39m: Cannot find name 'time2'. (ts)
+[36m  $effect(() => {
+    if (time2 && time2 !== "Rode o Pipeline Primeiro" && [35mtime2[36m !== "Erro ao carregar times") {
+      fetch(`http://localhost:8000/api/analytics/team_logo/${encodeURIComponent(time2)}`)[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:99:81
+[31mError[39m: Cannot find name 'time2'. (ts)
+[36m    if (time2 && time2 !== "Rode o Pipeline Primeiro" && time2 !== "Erro ao carregar times") {
+      fetch(`http://localhost:8000/api/analytics/team_logo/${encodeURIComponent([35mtime2[36m)}`)
+        .then(r => r.json())[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:111:10
+[31mError[39m: Cannot find name 'time1'. (ts)
+[36m    
+    if (![35mtime1[36m || !time2) {
+      errorMsg = 'Selecione os dois times vermelhos e amarelos.';[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:111:20
+[31mError[39m: Cannot find name 'time2'. (ts)
+[36m    
+    if (!time1 || ![35mtime2[36m) {
+      errorMsg = 'Selecione os dois times vermelhos e amarelos.';[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:115:9
+[31mError[39m: Cannot find name 'time1'. (ts)
+[36m    }
+    if ([35mtime1[36m === time2) {
+      errorMsg = 'Selecione times diferentes.';[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:115:19
+[31mError[39m: Cannot find name 'time2'. (ts)
+[36m    }
+    if (time1 === [35mtime2[36m) {
+      errorMsg = 'Selecione times diferentes.';[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:123:16
+[31mError[39m: Cannot find name 'time1'. (ts)
+[36m      const payload = {
+        time1: [35mtime1[36m,
+        time2: time2,[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:124:16
+[31mError[39m: Cannot find name 'time2'. (ts)
+[36m        time1: time1,
+        time2: [35mtime2[36m,
+        patches: selectedPatches.length > 0 ? selectedPatches : ["Todos"],[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:125:18
+[31mError[39m: Cannot find name 'selectedPatches'. (ts)
+[36m        time2: time2,
+        patches: [35mselectedPatches[36m.length > 0 ? selectedPatches : ["Todos"],
+        t1_top: t1_top,[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:125:47
+[31mError[39m: Cannot find name 'selectedPatches'. (ts)
+[36m        time2: time2,
+        patches: selectedPatches.length > 0 ? [35mselectedPatches[36m : ["Todos"],
+        t1_top: t1_top,[39m
+
+c:\Projetos\AI_LOL_Predictor\frontend\[32msrc\routes\analytics\+page.svelte[39m:256:91
+[31mError[39m: Cannot find name 'selectedPatches'. (ts)
+[36m          <button 
+            class="px-3 py-1.5 rounded-full text-sm font-medium border transition-colors {[35mselectedPatches[36m.includes(p) ? 'bg-blue-600 border-blue-500 text-white shadow-[0_0_10px_rgba(59,130,246,0.5)]' : 'bg-[#0f172a] border-[#334155] text-slate-400 hover:text-slate-200 hover:border-slate-500'}"
+            onclick={() => togglePatch(p)}[39m
+
+====================================
+[31msvelte-check found 26 errors and 22 warnings in 2 files
+[39m

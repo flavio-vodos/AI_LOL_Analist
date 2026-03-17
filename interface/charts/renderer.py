@@ -13,8 +13,8 @@ from .chart_generators import (
     gen_total_abates, gen_kills_por_time,
     gen_handicap, gen_duracao,
     gen_dragons, gen_torres, gen_baroes,
-    gen_timeline_chart, gen_radar_dna, gen_vision_control,
-    gen_timeline_chart, gen_radar_dna, gen_vision_control,
+    gen_timeline_chart, gen_radar_dna,
+    gen_timeline_chart, gen_radar_dna,
     gen_gold_team_summary, gen_gold_player_table
 )
 from .ev_finder import gen_betting_recommendations
@@ -145,14 +145,10 @@ def generate_charts(team1, team2, patches=None, odds_data=None, champs_t1=None, 
     html += f'<div {CARD}>{gen_timeline_chart(stats1, stats2, team1, team2, mult_t1, mult_t2)}</div>'
     html += '</div></div>'
 
-    # Visão e Controle de Mapa
-    html += f'<div {SECTION}><div {TITLE3}>👁️ Visão & Controle de Mapa</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(450px,1fr));gap:20px;">'
-    html += f'<div {CARD}>{gen_vision_control(stats1, stats2, team1, team2)}</div>'
-    html += '</div></div>'
 
     # Economia, Dano e Sangria
     html += f'<div {SECTION}><div {TITLE3}>💥 Advanced Pacing & Economy Context</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(450px,1fr));gap:20px;">'
-    html += gen_economy_cards(stats1, stats2, team1, team2)
+    html += gen_economy_cards(stats1, stats2, team1, team2, gold_t1, gold_t2)
     html += gen_bloodiness_pace(stats1, stats2, team1, team2)
     html += '</div></div>'
 
@@ -180,13 +176,6 @@ def generate_charts(team1, team2, patches=None, odds_data=None, champs_t1=None, 
     # Duração
     html += f'<div {SECTION}><div {TITLE2}>⏱ Duração do Jogo (AGT)</div><div style="display:grid;grid-template-columns:1fr;gap:20px;">'
     html += f'<div {CARD}>{gen_duracao(stats1, stats2, team1, team2, mult_t1, mult_t2)}</div>'
-    html += '</div></div>'
-
-    # Integração da camada Gold Focus Betting
-    TITLE_GOLD = 'style="color:#fbbf24;font-size:1.3rem;font-weight:800;margin-top:40px;margin-bottom:16px;padding-left:14px;border-left:4px solid #f59e0b;text-transform:uppercase;"'
-    html += f'<div {SECTION}><div {TITLE_GOLD}>💎 The Gold Layer — Prop Bets & Indexes</div><div style="display:grid;grid-template-columns:1fr;gap:20px;">'
-    html += gen_gold_team_summary(gold_t1, gold_t2, team1, team2)
-    html += gen_gold_player_table(gold_p1, gold_p2, team1, team2)
     html += '</div></div>'
 
     # Expected Value Finder

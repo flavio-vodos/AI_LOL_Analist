@@ -50,7 +50,8 @@ def popular_tabela_silver():
                 wardsplaced, wardskilled, controlwardsbought, visionscore,
                 cspm, earnedgoldshare,
                 xpat10, xpat15, xpat20, xpat25,
-                xpdiffat10, xpdiffat15, xpdiffat20, xpdiffat25
+                xpdiffat10, xpdiffat15, xpdiffat20, xpdiffat25,
+                game
             )
             SELECT
                 gameid, participantid, playername, patch, league, split, side, position, teamname, champion, result, kills,
@@ -66,7 +67,8 @@ def popular_tabela_silver():
                 wardsplaced, wardskilled, controlwardsbought, visionscore,
                 cspm, earnedgoldshare,
                 xpat10, xpat15, xpat20, xpat25,
-                xpdiffat10, xpdiffat15, xpdiffat20, xpdiffat25
+                xpdiffat10, xpdiffat15, xpdiffat20, xpdiffat25,
+                game
             FROM "{tabela_bronze}";
             ''')
             

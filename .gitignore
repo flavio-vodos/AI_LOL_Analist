@@ -14,7 +14,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+# lib/
 lib64/
 parts/
 sdist/
@@ -193,6 +193,9 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+# Kiro
+.kiro/specs/
+
 # Data and Databases
 *.db
 *.csv
@@ -200,3 +203,15 @@ data/
 
 # Secret Variables
 .env
+
+# SvelteKit / Node
+frontend/node_modules/
+frontend/.svelte-kit/
+frontend/build/
+frontend/dist/
+
+# Residuals / Dev Temp
+tmp/
+api_debug.json
+
+docs/

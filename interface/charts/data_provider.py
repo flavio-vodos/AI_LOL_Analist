@@ -132,21 +132,48 @@ def get_team_stats(team_name, patches=None):
         print(f"  ⚠️ Erro ao consultar DB (team={team_name}): {e}")
         return None
 
-def get_gold_team_stats(team_name):
+def get_gold_team_stats(team_name, patches=None):
     """
     Busca as métricas preditivas avançadas da camada Gold para um time.
+    Versão dinâmica: calcula na hora para respeitar o filtro de patches.
+    Threshold de Throw/Comeback aumentado para 2000g (vantagem real).
     """
     db_path = get_db_path()
+    patch_clause, patch_params = build_patch_clause(patches)
     try:
         conn = sqlite3.connect(db_path)
         conn.row_factory = sqlite3.Row
         c = conn.cursor()
-        c.execute("SELECT * FROM gold_team_metrics WHERE teamname = ?", (team_name,))
+        
+        base_where = f"position='team' AND teamname = ?{patch_clause}"
+        params = [team_name] + patch_params
+
+        query = f"""
+            SELECT 
+                COUNT(DISTINCT gameid) as games_played,
+                AVG(golddiffat15) as avg_golddiffat15,
+                AVG(xpdiffat15) as avg_xpdiffat15,
+                AVG(csdiffat15) as avg_csdiffat15,
+                COALESCE((AVG(golddiffat15) + AVG(xpdiffat15) * 2 + AVG(csdiffat15) * 20) / 3, 0) AS egdi_score,
+                
+                -- Throw Rate (Perder jogo com > 2000g de vantagem aos 15)
+                COALESCE(SUM(CASE WHEN golddiffat15 > 2000 AND result = '0' THEN 1.0 ELSE 0.0 END) / 
+                NULLIF(SUM(CASE WHEN golddiffat15 > 2000 THEN 1.0 ELSE 0.0 END), 0) * 100.0, 0) as throw_rate,
+                
+                -- Comeback Rate (Ganhar jogo com < -2000g de desvantagem aos 15)
+                COALESCE(SUM(CASE WHEN golddiffat15 < -2000 AND result = '1' THEN 1.0 ELSE 0.0 END) / 
+                NULLIF(SUM(CASE WHEN golddiffat15 < -2000 THEN 1.0 ELSE 0.0 END), 0) * 100.0, 0) as comeback_rate,
+                
+                AVG(CAST(result AS INTEGER)) * 100.0 as win_rate
+            FROM match_data_silver
+            WHERE {base_where}
+        """
+        c.execute(query, params)
         row = c.fetchone()
         conn.close()
-        return dict(row) if row else None
+        return dict(row) if row and row['games_played'] > 0 else None
     except Exception as e:
-        print(f"  ⚠️ Erro ao consultar Gold Team DB ({team_name}): {e}")
+        print(f"  ⚠️ Erro ao calcular Gold Team Stats dinâmico ({team_name}): {e}")
         return None
 
 def get_gold_player_stats(team_name):
@@ -231,3 +258,152 @@ def get_platinum_champion_stats(team_name, champion):
     except Exception as e:
         print(f"  ⚠️ Erro ao consultar Platinum DB ({team_name}, {champion}): {e}")
         return {"team_stats": None, "world_stats": None}
+
+
+def get_series_stats(team_name, patches=None):
+    """
+    Agrega estatísticas por número do jogo (1, 2, 3, 4, 5) em uma série.
+    Útil para identificar tendências em jogos decisivos (ex: jogo 5 tem mais abates).
+    """
+    db_path = get_db_path()
+    patch_clause, patch_params = build_patch_clause(patches)
+    try:
+        conn = sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row
+        c = conn.cursor()
+        
+        base_where = f"position='team' AND teamname = ?{patch_clause}"
+        params = [team_name] + patch_params
+
+        query = f"""
+            SELECT 
+                game,
+                COUNT(gameid) as matches,
+                AVG(teamkills) as avg_kills,
+                AVG(teamdeaths) as avg_deaths,
+                AVG(dragons) as avg_dragons,
+                AVG(barons) as avg_barons,
+                AVG(towers) as avg_towers,
+                AVG(gamelength) / 60.0 as avg_duration_min,
+                AVG(CASE WHEN result='1' THEN 1.0 ELSE 0.0 END) * 100.0 as win_rate
+            FROM match_data_silver
+            WHERE {base_where}
+            GROUP BY game
+            ORDER BY game
+        """
+        c.execute(query, params)
+        rows = c.fetchall()
+        conn.close()
+        
+        return [dict(row) for row in rows]
+    except Exception as e:
+        print(f"  ⚠️ Erro ao consultar Series Stats ({team_name}): {e}")
+        return []
+
+
+def get_side_stats(team_name, patches=None):
+    """Retorna vitórias e jogos por lado (Blue/Red) para um time."""
+    db_path = get_db_path()
+    patch_clause, patch_params = build_patch_clause(patches)
+    try:
+        conn = sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row
+        c = conn.cursor()
+        
+        base_where = f"position='team' AND teamname = ?{patch_clause}"
+        params = [team_name] + patch_params
+
+        query = f"""
+            SELECT 
+                side,
+                COUNT(*) as games,
+                SUM(CASE WHEN result='1' THEN 1 ELSE 0 END) as wins
+            FROM match_data_silver
+            WHERE {base_where}
+            GROUP BY side
+        """
+        c.execute(query, params)
+        rows = c.fetchall()
+        conn.close()
+        return [dict(row) for row in rows]
+    except Exception as e:
+        print(f"  ⚠️ Erro ao consultar Side Stats ({team_name}): {e}")
+        return []
+
+
+def get_league_context(league_name):
+    """Busca o baseline da liga (média de abates, side bias)."""
+    db_path = get_db_path()
+    try:
+        conn = sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row
+        c = conn.cursor()
+        
+        query = """
+            SELECT 
+                AVG(teamkills + teamdeaths) as avg_total_kills,
+                AVG(CASE WHEN side='Blue' AND result='1' THEN 1.0 WHEN side='Blue' THEN 0.0 END) * 100 as blue_win_rate,
+                AVG(gamelength) / 60.0 as avg_duration,
+                COUNT(*) / 2 as total_games
+            FROM match_data_silver
+            WHERE position='team' AND league = ?
+        """
+        c.execute(query, (league_name,))
+        row = c.fetchone()
+        conn.close()
+        return dict(row) if row and row['total_games'] > 0 else None
+    except Exception as e:
+        print(f"  ⚠️ Erro ao consultar League Context ({league_name}): {e}")
+        return None
+
+
+def get_objective_win_correlations(patches=None):
+    """Calcula a correlação global entre o primeiro objetivo e a vitória final."""
+    db_path = get_db_path()
+    patch_clause, patch_params = build_patch_clause(patches)
+    try:
+        conn = sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row
+        c = conn.cursor()
+        
+        # Win rates por primeiro objetivo
+        query1 = f"""
+            SELECT 
+                AVG(CASE WHEN firstblood = 1 AND result = '1' THEN 1.0 WHEN firstblood = 1 THEN 0.0 END) * 100 as fb_wr,
+                AVG(CASE WHEN firstdragon = 1 AND result = '1' THEN 1.0 WHEN firstdragon = 1 THEN 0.0 END) * 100 as fd_wr,
+                AVG(CASE WHEN firstbaron = 1 AND result = '1' THEN 1.0 WHEN firstbaron = 1 THEN 0.0 END) * 100 as fbaron_wr,
+                AVG(CASE WHEN firstherald = 1 AND result = '1' THEN 1.0 WHEN firstherald = 1 THEN 0.0 END) * 100 as fherald_wr
+            FROM match_data_silver
+            WHERE position='team'{patch_clause}
+        """
+        c.execute(query1, patch_params)
+        row1 = dict(c.fetchone())
+        
+        # Conversão de Vantagem de Ouro (Large Lead > 2k aos 15m)
+        query2 = f"""
+            SELECT AVG(CASE WHEN golddiffat15 > 2000 AND result = '1' THEN 1.0 WHEN golddiffat15 > 2000 THEN 0.0 END) * 100 as large_lead_wr
+            FROM match_data_silver
+            WHERE position='team'{patch_clause} AND golddiffat15 IS NOT NULL
+        """
+        c.execute(query2, patch_params)
+        row2 = c.fetchone()
+        
+        # Soul Win Rate (4 dragões)
+        query3 = f"""
+            SELECT AVG(CASE WHEN dragons >= 4 AND result = '1' THEN 1.0 WHEN dragons >= 4 THEN 0.0 END) * 100 as soul_wr
+            FROM match_data_silver
+            WHERE position='team'{patch_clause}
+        """
+        c.execute(query3, patch_params)
+        row3 = c.fetchone()
+        
+        conn.close()
+        
+        # Merge results
+        res = row1
+        res['large_lead_wr'] = row2['large_lead_wr'] if row2 else 0
+        res['soul_wr'] = row3['soul_wr'] if row3 else 0
+        return res
+    except Exception as e:
+        print(f"  ⚠️ Erro ao consultar Correlações de Objetivos: {e}")
+        return None

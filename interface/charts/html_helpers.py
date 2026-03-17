@@ -5,6 +5,10 @@ Builder Pattern: cada função constrói um fragmento HTML independente e reutil
 
 import statistics
 import html as html_module
+import plotly.io as pio
+
+# Enforce dark theme globally for all plotly operations in this process
+pio.templates.default = "plotly_dark"
 
 # ============================================================================
 # CSS — Tema Dark Premium
@@ -17,152 +21,204 @@ INSIGHTS_CSS = """
     to { opacity: 1; transform: translateY(0); }
 }
 .insights-container {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0;
+    color: #e2e8f0;
 }
-.chart-section { margin-bottom: 24px; animation: fadeInUp 0.6s ease-out both; }
+.chart-section { margin-bottom: 32px; animation: fadeInUp 0.6s ease-out both; }
 .chart-card {
     background: #1e293b;
-    border-radius: 12px;
-    padding: 16px;
+    border-radius: 16px;
+    padding: 24px;
     border: 1px solid #334155;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 .chart-card:hover {
     border-color: rgba(59, 130, 246, 0.5);
-    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15);
-    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
 }
 .explain-box {
-    background: rgba(15,23,42,0.7);
-    border-left: 3px solid #6366f1;
-    border-radius: 0 8px 8px 0;
-    padding: 12px 16px;
-    margin-top: 10px;
-    font-size: 0.82rem;
-    color: #94a3b8;
-    line-height: 1.5;
+    background: rgba(15, 23, 42, 0.5);
+    border-left: 4px solid #3b82f6;
+    border-radius: 4px 12px 12px 4px;
+    padding: 16px 20px;
+    margin-top: 16px;
+    font-size: 0.875rem;
+    color: #cbd5e1;
+    line-height: 1.6;
 }
-.explain-box b { color: #a5b4fc; }
+.explain-box b { color: #60a5fa; font-weight: 600; }
 .stats-badge {
     display: inline-block;
-    padding: 3px 10px;
-    border-radius: 6px;
-    font-size: 0.78rem;
-    font-weight: 700;
-    margin: 2px 3px;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin: 4px;
     position: relative;
-    cursor: help;
+    cursor: default;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 .stats-badge:hover::after {
     content: attr(data-tip);
     position: absolute;
-    bottom: 110%;
-    /* Keep it centered but constrain its width tightly and use viewport limits if needed */
+    bottom: 125%;
     left: 50%;
     transform: translateX(-50%);
     background: #0f172a;
-    color: #e2e8f0;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 0.75rem;
+    color: #f8fafc;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 0.8rem;
     font-weight: 400;
     white-space: normal;
     width: max-content;
-    max-width: min(260px, 80vw);
+    max-width: 280px;
     text-align: left;
-    line-height: 1.4;
-    z-index: 9999;
-    border: 1px solid #475569;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
-    animation: fadeInUp 0.15s ease-out;
+    line-height: 1.5;
+    z-index: 100;
+    border: 1px solid #334155;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.2s ease-out;
     pointer-events: none;
 }
-.stats-badge {
-    position: relative; /* ensure tooltip is positioned relative to badge */
-}
-/* If it's the last element or right-aligned, push the tooltip to the left */
 .stats-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
-    position: relative;
-    max-width: 100%;
-}
-.tooltip-right:hover::after {
-    left: auto;
-    right: 0;
-    transform: none;
-}
-.tooltip-left:hover::after {
-    left: 0;
-    right: auto;
-    transform: none;
+    gap: 8px;
+    margin-top: 12px;
 }
 .odd-badge {
-    background: rgba(234,179,8,0.15);
+    background: rgba(234, 179, 8, 0.1);
     color: #fbbf24;
-    border: 1px solid rgba(234,179,8,0.3);
-    padding: 4px 10px;
-    border-radius: 8px;
-    font-size: 0.8rem;
+    border: 1px solid rgba(234, 179, 8, 0.2);
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-size: 0.875rem;
     font-weight: 700;
     display: inline-block;
-    margin: 2px 4px;
+    margin-top: 12px;
 }
-.glossary-term {
+@keyframes led-rotate {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes pulse-emerald {
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+.data-comment-box {
+    position: relative;
+    padding: 3px;
+    background: #0f172a;
+    border-radius: 16px;
+    margin-top: 24px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+.data-comment-box::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 250%;
+    height: 250%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        #10b981 30deg,
+        transparent 60deg,
+        transparent 180deg,
+        #fbbf24 210deg,
+        transparent 240deg
+    );
+    animation: led-rotate 4s linear infinite;
+    z-index: 0;
+}
+.data-comment-box-inner {
+    position: relative;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 14px;
+    padding: 20px;
+    z-index: 1;
     color: #e2e8f0;
-    font-weight: 700;
 }
-.glossary-desc {
-    color: #94a3b8;
-    font-size: 0.85rem;
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse-emerald 2s infinite;
+    margin-right: 8px;
 }
-.bet-entry details {
-    margin: 3px 0;
-}
-.bet-entry summary {
-    display: inline-flex;
+.data-comment-box-inner b { color: #4ade80; }
+.comment-title {
+    display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 5px 12px;
-    border-radius: 8px;
-    font-size: 0.82rem;
-    font-weight: 700;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: #4ade80;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+.insight-item {
+    margin-bottom: 8px;
+    padding-left: 12px;
+    border-left: 2px solid rgba(16, 185, 129, 0.3);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+/* Estilos para o Bet Line / EV Finder */
+.bet-grid-item { margin-bottom: 8px; width: 100%; }
+.bet-entry {
+    background: rgba(15, 23, 42, 0.6);
+    border-radius: 12px;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 6px;
+}
+.bet-entry:hover {
+    background: rgba(30, 41, 59, 1);
+    border-color: rgba(59, 130, 246, 0.4);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.bet-low { border-left: 4px solid #10b981; }
+.bet-med { border-left: 4px solid #fbbf24; }
+.bet-high { border-left: 4px solid #ef4444; }
+
+.bet-entry summary {
     cursor: pointer;
-    transition: all 0.2s ease;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #f1f5f9;
     list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .bet-entry summary::-webkit-details-marker { display: none; }
-.bet-entry summary::before { content: '▶ '; font-size: 0.65rem; }
-.bet-entry details[open] summary::before { content: '▼ '; }
-.bet-entry summary:hover { transform: scale(1.02); filter: brightness(1.15); }
-.bet-low summary { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
-.bet-med summary { background: rgba(234,179,8,0.15); color: #fbbf24; border: 1px solid rgba(234,179,8,0.3); }
-.bet-high summary { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+.bet-entry summary b { color: #fbbf24; font-size: 0.95rem; }
+
 .bet-detail {
-    background: rgba(15,23,42,0.9);
-    border: 1px solid #475569;
-    border-radius: 10px;
-    padding: 14px 16px;
-    margin: 6px 0 4px 0;
-    font-size: 0.82rem;
-    color: #cbd5e1;
-    line-height: 1.6;
-    animation: fadeInUp 0.2s ease-out;
+    margin-top: 12px;
+    padding: 12px;
+    background: rgba(15, 23, 42, 0.8);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    border: 1px solid rgba(255, 255, 255, 0.03);
 }
-.bets-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 8px;
-}
-.bet-grid-item {
-    flex: 1 1 calc(50% - 8px);
-    box-sizing: border-box;
-}
+.bet-detail b { color: #60a5fa; }
 </style>
 """
 
@@ -172,30 +228,89 @@ INSIGHTS_CSS = """
 # ============================================================================
 
 def base_layout(title="", height=400):
-    """Retorna dict de layout padrão Plotly com tema dark."""
+    """Retorna dict de layout padrão Plotly com tema dark moderno e legível."""
     return dict(
-        title=dict(text=title, font=dict(size=16, color="#e2e8f0")),
+        template="plotly_dark",
+        title=dict(
+            text=title, 
+            font=dict(size=18, color="#f8fafc", weight="bold"),
+            x=0.05,
+            y=0.95
+        ),
         paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(15,23,42,0.8)",
-        font=dict(color="#cbd5e1", family="Segoe UI, system-ui, sans-serif"),
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="#cbd5e1", family="Inter, Segoe UI, sans-serif"),
         height=height,
-        margin=dict(l=50, r=30, t=50, b=40),
-        xaxis=dict(gridcolor="rgba(51,65,85,0.5)", zerolinecolor="#334155"),
-        yaxis=dict(gridcolor="rgba(51,65,85,0.5)", zerolinecolor="#334155"),
-        legend=dict(bgcolor="rgba(0,0,0,0)", borderwidth=0),
+        margin=dict(l=60, r=40, t=80, b=40),
+        xaxis=dict(
+            gridcolor="rgba(148, 163, 184, 0.1)", 
+            zerolinecolor="rgba(148, 163, 184, 0.2)",
+            tickfont=dict(size=11, color="#94a3b8"),
+            title=dict(font=dict(size=12, color="#94a3b8"))
+        ),
+        yaxis=dict(
+            gridcolor="rgba(148, 163, 184, 0.1)", 
+            zerolinecolor="rgba(148, 163, 184, 0.2)",
+            tickfont=dict(size=11, color="#94a3b8"),
+            title=dict(font=dict(size=12, color="#94a3b8"))
+        ),
+        legend=dict(
+            bgcolor="rgba(15, 23, 42, 0.8)",
+            bordercolor="rgba(51, 65, 85, 0.5)",
+            borderwidth=1,
+            font=dict(size=12, color="#e2e8f0"),
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        ),
+        colorway=["#3b82f6", "#ef4444", "#10b981", "#f59e0b", "#8b5cf6", "#ec4899"],
+        hoverlabel=dict(
+            bgcolor="#1e293b",
+            font_size=13,
+            font_family="Inter, system-ui",
+            bordercolor="#334155"
+        ),
+        hovermode="x unified"
     )
 
 
 def fig_to_html(fig):
-    """Converte uma Plotly Figure em iframe HTML seguro para Gradio."""
+    """Converte uma Plotly Figure em iframe HTML com transparência forçada em todas as camadas."""
+    # Ensure layout is transparent even if not created via base_layout
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        template="plotly_dark"
+    )
+    
     raw = fig.to_html(
-        full_html=True, include_plotlyjs="cdn",
+        full_html=False, include_plotlyjs="cdn",
         config={"displayModeBar": True, "scrollZoom": True, "responsive": True,
                 "modeBarButtonsToRemove": ["sendDataToCloud", "editInChartStudio", "lasso2d"]},
     )
-    escaped = html_module.escape(raw)
+    
+    # Ultimate CSS reset for Plotly backgrounds inside the iframe
+    style_fix = """
+    <style>
+        :root, html, body { background-color: transparent !important; background: transparent !important; margin: 0; padding: 0; overflow: hidden; }
+        .plotly-graph-div { background-color: transparent !important; background: transparent !important; }
+        .main-svg { background-color: transparent !important; background: transparent !important; }
+        .bg, .bglayer, .plotbg { fill: transparent !important; }
+        .js-plotly-plot .plotly .bg { fill: transparent !important; }
+        canvas { background-color: transparent !important; }
+    </style>
+    """
+    
+    # Inject style and wrap in a clean structure
+    content = f"<html><head>{style_fix}</head><body style='background:transparent;'>{raw}</body></html>"
+    # Fallback replace for the main div class just in case
+    content = content.replace('class="plotly-graph-div"', 'class="plotly-graph-div" style="background:transparent !important;"')
+    
+    escaped = html_module.escape(content)
     height = fig.layout.height or 400
-    return f'<iframe srcdoc="{escaped}" style="width:100%;height:{height + 50}px;border:none;background:transparent;" scrolling="no"></iframe>'
+    return f'<iframe srcdoc="{escaped}" style="width:100%;height:{height + 10}px;border:none;background:transparent;" allowtransparency="true" scrolling="no"></iframe>'
 
 
 # ============================================================================
@@ -270,6 +385,29 @@ def odd_badge(prob):
 def explain(text):
     """Gera caixa explicativa '📖 Como ler:' com bordas indigo."""
     return f'<div class="explain-box">📖 <b>Como ler:</b> {text}</div>'
+
+
+def data_comment(insights):
+    """Gera caixa animada '💡 Comentário Baseado em Dados' com insights dinâmicos.
+    
+    Args:
+        insights: string ou lista de strings com insights acionáveis.
+    """
+    if not insights:
+        return ""
+    if isinstance(insights, str):
+        insights = [insights]
+    items = "".join(f'<div class="insight-item">{i}</div>' for i in insights if i)
+    if not items:
+        return ""
+    return (
+        '<div class="data-comment-box">'
+        '<div class="data-comment-box-inner">'
+        '<div class="comment-title"><span class="pulse-dot"></span>💡 Comentário Baseado em Dados</div>'
+        f'{items}'
+        '</div>'
+        '</div>'
+    )
 
 
 def risk_tier(prob):
